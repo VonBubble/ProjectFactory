@@ -16,6 +16,7 @@ namespace GameEngine.Factory.Component
 	/// <summary>
 	/// Description of Conveyor.
 	/// </summary>
+	[Serializable]
 	public class Conveyor: IFactoryComponent
 	{
 		private Vector2Int position;
@@ -26,6 +27,8 @@ namespace GameEngine.Factory.Component
 		private int delayUntilNextTick;
 		
 		private int timeSinceLastTick;
+		
+		public Conveyor() { }
 		
 		public Conveyor(Vector2Int position, Orientation direction) {
 			name = "Conveyor";
@@ -108,6 +111,9 @@ namespace GameEngine.Factory.Component
 		public Orientation Orientation {
 			get {
 				return orientation;
+			}
+			set {
+				orientation = value;
 			}
 		}
 		

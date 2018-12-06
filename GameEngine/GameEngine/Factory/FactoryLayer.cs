@@ -15,6 +15,7 @@ namespace GameEngine.Factory
 	/// <summary>
 	/// Description of FactoryLayer.
 	/// </summary>
+	[Serializable]
 	public class FactoryLayer
 	{
 		private List<IFactoryComponent> components;
@@ -36,9 +37,9 @@ namespace GameEngine.Factory
 			components.Add(component);
 		}
 		
-		public ReadOnlyCollection<IFactoryComponent> Components {
+		public List<IFactoryComponent> Components {
 			get {
-				return components.AsReadOnly();
+				return components;
 			}
 		}
 	}

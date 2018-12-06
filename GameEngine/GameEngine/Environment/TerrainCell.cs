@@ -15,6 +15,7 @@ namespace GameEngine.Environment
 	/// <summary>
 	/// Description of TerrainCell.
 	/// </summary>
+	[Serializable]
 	public class TerrainCell
 	{
 		private Vector2Int position;

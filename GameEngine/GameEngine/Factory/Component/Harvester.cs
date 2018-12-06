@@ -16,6 +16,7 @@ namespace GameEngine.Factory.Component
 	/// <summary>
 	/// Description of Harvester.
 	/// </summary>
+	[Serializable]
 	public class Harvester: IFactoryComponent
 	{
 		private Vector2Int position;
@@ -25,6 +26,8 @@ namespace GameEngine.Factory.Component
 		private int delayUntilNextTick;
 		
 		private int timeSinceLastTick;
+		
+		public Harvester() { }
 		
 		public Harvester(Vector2Int position) {
 			name = "Harvester";

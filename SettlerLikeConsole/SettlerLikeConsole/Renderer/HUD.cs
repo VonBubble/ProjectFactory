@@ -36,16 +36,17 @@ namespace SettlerLikeConsole.Renderer
 		
 		public static void UpdateHeader()
 		{
+			int width = World.Instance.Terrain.Cells.GetLength(0) + Grid.marginWidth;
 			for (int y = 0; y < height; y++) {
 				var line = new StringBuilder();
-				for (int x = -1; x <= World.Instance.Terrain.Cells.GetLength(0); x++) {
+				for (int x = -1; x <= width; x++) {
 					if(y == 0 || y == height - 1) {
-						if(x == -1 || x == World.Instance.Terrain.Cells.GetLength(0))
+						if(x == -1 || x == width)
 							line.Append(BORDER_CORNER);
 						else
 							line.Append(BORDER_HORIZONTAL);
 					}
-					else if(x == -1 || x == World.Instance.Terrain.Cells.GetLength(0))
+					else if(x == -1 || x == width)
 						line.Append(BORDER_VERTICAL);
 					else {
 						line.Append(EMPTY_CELL);

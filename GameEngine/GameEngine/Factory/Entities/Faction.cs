@@ -16,11 +16,16 @@ namespace GameEngine.Factory.Entities
 	/// <summary>
 	/// Description of Faction.
 	/// </summary>
+	[Serializable]
 	public class Faction
 	{
 		private string name;
 		private FactoryLayer factoryLayer;
 		private List<Mecha> units;
+		
+		public Faction() {
+			units = new List<Mecha>();
+		}
 		
 		public Faction(string name)
 		{
@@ -64,11 +69,14 @@ namespace GameEngine.Factory.Entities
 			get {
 				return factoryLayer;
 			}
+			set {
+				factoryLayer = value;
+			}
 		}
 		
-		public ReadOnlyCollection<Mecha> Units {
+		public List<Mecha> Units {
 			get {
-				return units.AsReadOnly();
+				return units;
 			}
 		}
 	}

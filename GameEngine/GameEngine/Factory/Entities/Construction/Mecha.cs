@@ -15,6 +15,7 @@ namespace GameEngine.Factory.Entities.Construction
 	/// <summary>
 	/// Description of Mecha.
 	/// </summary>
+	[Serializable]
 	public class Mecha
 	{
 		private static Random RAND = new Random();
@@ -22,6 +23,8 @@ namespace GameEngine.Factory.Entities.Construction
 		private string name;
 		private Vector2Int position;
 		private Faction owner;
+		
+		public Mecha() { }
 		
 		public Mecha(string name, Vector2Int position, Faction owner)
 		{

@@ -7,13 +7,15 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.IO;
+using System.Xml.Serialization;
 using System.Collections.Generic;
 using GameEngine;
 using GameEngine.Environment;
 using GameEngine.Factory;
 using GameEngine.Factory.Component;
 using GameEngine.Utils;
-using SettlerLikeConsole.Renderer;
+using GameEngine.Factory.Entities;
 
 namespace SettlerLikeConsole.Controller
 {
@@ -27,9 +29,14 @@ namespace SettlerLikeConsole.Controller
 		public static readonly ConsoleKey LEFT = ConsoleKey.Q;
 		public static readonly ConsoleKey RIGHT = ConsoleKey.D;
 		
-		public static readonly ConsoleKey BUILD_HARVESTER = ConsoleKey.H;
-		public static readonly ConsoleKey BUILD_CONVEYOR = ConsoleKey.J;
-		public static readonly ConsoleKey BUILD_BUILDER = ConsoleKey.K;
+		public static readonly ConsoleKey ROTATE = ConsoleKey.R;
+		
+		public static readonly ConsoleKey BUILD_HARVESTER = ConsoleKey.J;
+		public static readonly ConsoleKey BUILD_CONVEYOR = ConsoleKey.K;
+		public static readonly ConsoleKey BUILD_BUILDER = ConsoleKey.L;
+		
+		public static readonly ConsoleKey SAVE = ConsoleKey.O;
+		public static readonly ConsoleKey LOAD = ConsoleKey.P;
 		
 		public static readonly char CHARACTER = 'X';
 		private static Vector2Int position;
@@ -47,7 +54,11 @@ namespace SettlerLikeConsole.Controller
 		}
 		
 		public static void Handle(ConsoleKey input) {
-			if(input == UP)
+			if(input == SAVE) {
+				Save.SerializeObject<World>(World.Instance, @"C:\Users\lcourtal\Documents\Games\save");
+			} else if(input == LOAD) {
+				World.Instance.LoadSave(Save.DeserializeObject<World>(@"C:\Users\lcourtal\Documents\Games\save"));
+			} else if(input == UP)
 				Move(0, -1);
 			else if(input == DOWN)
 				Move(0, 1);
@@ -55,7 +66,12 @@ namespace SettlerLikeConsole.Controller
 				Move(-1, 0);
 			else if(input == RIGHT)
 				Move(1, 0);
-			else if(input == BUILD_HARVESTER) {
+			else if(input == ROTATE) {
+				var cell = GetFocusedCell();
+				if(cell.FactoryComponent != null && cell.FactoryComponent.GetType() == typeof(Conveyor)) {
+					(cell.FactoryComponent as Conveyor).Orientation = (cell.FactoryComponent as Conveyor).Orientation.Rotate();
+				}
+			} else if(input == BUILD_HARVESTER) {
 				World.Instance.FactionList.GetFaction("Player").AddFactoryComponent(new Harvester(position));
 			}
 			else if(input == BUILD_CONVEYOR) {

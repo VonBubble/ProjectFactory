@@ -13,6 +13,7 @@ namespace GameEngine.Environment.Material
 	/// <summary>
 	/// Description of Ressource.
 	/// </summary>
+	[Serializable]
 	public class Ressource
 	{
 		private string name;

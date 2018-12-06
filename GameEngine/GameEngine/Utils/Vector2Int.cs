@@ -13,6 +13,7 @@ namespace GameEngine.Utils
 	/// <summary>
 	/// Description of Vector2Int.
 	/// </summary>
+	[Serializable]
 	public struct Vector2Int
 	{
 		public int X;

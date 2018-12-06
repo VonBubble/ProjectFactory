@@ -15,9 +15,10 @@ namespace GameEngine
 	/// <summary>
 	/// TODO: Fill this
 	/// </summary>
+	[Serializable]
 	public sealed class World
 	{
-		private static readonly World instance = new World();
+		private static World instance = new World();
 
 		private Terrain terrain;
 		private FactionList factionList;
@@ -33,6 +34,10 @@ namespace GameEngine
 	    	terrain = new Terrain();
 	    	factionList = new FactionList();
 	    	factionList.AddFaction("Player");
+	    }
+	    
+	    public void LoadSave(World save) {
+	    	instance = save;
 	    }
 	    
 	    public static World Instance

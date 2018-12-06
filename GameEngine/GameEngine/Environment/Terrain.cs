@@ -14,6 +14,7 @@ namespace GameEngine.Environment
 	/// <summary>
 	/// Description of Terrain.
 	/// </summary>
+	[Serializable]
 	public class Terrain
 	{		
 		private TerrainCell[,] cells;

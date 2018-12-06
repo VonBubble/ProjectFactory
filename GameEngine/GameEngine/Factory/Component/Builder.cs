@@ -17,6 +17,7 @@ namespace GameEngine.Factory.Component
 	/// <summary>
 	/// Description of Builder.
 	/// </summary>
+	[Serializable]
 	public class Builder: IFactoryComponent
 	{
 		private Vector2Int position;
@@ -27,6 +28,8 @@ namespace GameEngine.Factory.Component
 		private int produced = 0;
 		
 		private int timeSinceLastTick;
+		
+		public Builder() { }
 		
 		public Builder(Vector2Int position) {
 			name = "Builder";

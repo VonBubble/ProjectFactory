@@ -14,6 +14,7 @@ namespace GameEngine.Utils
 	/// <summary>
 	/// Description of Orientation.
 	/// </summary>
+	[Serializable]
 	public enum Orientation
 	{
 		NORTH,
@@ -88,7 +89,7 @@ namespace GameEngine.Utils
 	        	case Orientation.NORTH:
 	        		return World.Instance.Terrain.GetTerrainCellAt(origin.X, origin.Y - 1);
 	        	case Orientation.NORTH_EAST:
-	        		return World.Instance.Terrain.GetTerrainCellAt(origin.X + 1, origin.Y + 1);
+	        		return World.Instance.Terrain.GetTerrainCellAt(origin.X + 1, origin.Y - 1);
 	        	case Orientation.EAST:
 	        		return World.Instance.Terrain.GetTerrainCellAt(origin.X + 1, origin.Y);
 	        	case Orientation.SOUTH_EAST:
@@ -104,6 +105,13 @@ namespace GameEngine.Utils
 	        	default:
 	        		return World.Instance.Terrain.GetTerrainCellAt(origin.X, origin.Y);
 	        }
+	    }
+	    
+	    public static Orientation Rotate(this Orientation orientation) {
+	    	if(orientation == Orientation.CENTER || orientation == Orientation.NORTH_WEST)
+    			return Orientation.NORTH;
+    		else
+    			return (orientation + 1);
 	    }
 	}
 }

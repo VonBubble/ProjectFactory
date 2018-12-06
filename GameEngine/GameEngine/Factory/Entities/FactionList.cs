@@ -6,6 +6,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 
@@ -14,6 +15,7 @@ namespace GameEngine.Factory.Entities
 	/// <summary>
 	/// Description of FactionList.
 	/// </summary>
+	[Serializable]
 	public class FactionList
 	{
 		private List<Faction> factions;
@@ -43,9 +45,9 @@ namespace GameEngine.Factory.Entities
 			return null;
 		}
 		
-		public ReadOnlyCollection<Faction> Factions {
+		public List<Faction> Factions {
 			get {
-				return factions.AsReadOnly();
+				return factions;
 			}
 		}
 	}

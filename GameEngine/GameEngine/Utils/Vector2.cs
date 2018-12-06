@@ -13,6 +13,7 @@ namespace GameEngine.Utils
 	/// <summary>
 	/// Description of Vector2.
 	/// </summary>
+	[Serializable]
 	public class Vector2
 	{
 		private float x;
