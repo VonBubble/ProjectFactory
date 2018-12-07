@@ -45,9 +45,9 @@ namespace GameEngine.Factory.Entities
 			return null;
 		}
 		
-		public List<Faction> Factions {
+		public ReadOnlyCollection<Faction> Factions {
 			get {
-				return factions;
+				return factions.AsReadOnly();
 			}
 		}
 	}

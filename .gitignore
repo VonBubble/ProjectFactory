@@ -34,3 +34,5 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+SettlerLikeConsole/SettlerLikeConsole/bin/Debug/log.txt
+SettlerLikeConsole/SettlerLikeConsole/bin/Debug/SettlerLikeConsole.exe

@@ -29,8 +29,6 @@ namespace GameEngine.Factory.Component
 		
 		private int timeSinceLastTick;
 		
-		public Builder() { }
-		
 		public Builder(Vector2Int position) {
 			name = "Builder";
 			this.position = position;

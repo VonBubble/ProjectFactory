@@ -28,8 +28,6 @@ namespace GameEngine.Factory.Component
 		
 		private int timeSinceLastTick;
 		
-		public Conveyor() { }
-		
 		public Conveyor(Vector2Int position, Orientation direction) {
 			name = "Conveyor";
 			this.position = position;

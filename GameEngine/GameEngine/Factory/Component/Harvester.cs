@@ -27,8 +27,6 @@ namespace GameEngine.Factory.Component
 		
 		private int timeSinceLastTick;
 		
-		public Harvester() { }
-		
 		public Harvester(Vector2Int position) {
 			name = "Harvester";
 			this.position = position;

@@ -37,9 +37,9 @@ namespace GameEngine.Factory
 			components.Add(component);
 		}
 		
-		public List<IFactoryComponent> Components {
+		public ReadOnlyCollection<IFactoryComponent> Components {
 			get {
-				return components;
+				return components.AsReadOnly();
 			}
 		}
 	}

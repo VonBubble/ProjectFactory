@@ -74,9 +74,9 @@ namespace GameEngine.Factory.Entities
 			}
 		}
 		
-		public List<Mecha> Units {
+		public ReadOnlyCollection<Mecha> Units {
 			get {
-				return units;
+				return units.AsReadOnly();
 			}
 		}
 	}
