@@ -17,10 +17,7 @@ namespace GameEngine.Factory
 	/// </summary>
 	public interface IFactoryComponent
 	{
-		Vector2Int Position { get; set;}
-		string Name { get; set; }
-		Faction Owner { get; set; }
-		int DelayUntilNextTick { get; }
+		FactoryEntity Parent { get; set; }
 		
 		void Update();
 	}

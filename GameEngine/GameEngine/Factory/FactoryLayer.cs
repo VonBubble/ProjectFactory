@@ -18,28 +18,28 @@ namespace GameEngine.Factory
 	[Serializable]
 	public class FactoryLayer
 	{
-		private List<IFactoryComponent> components;
+		private List<FactoryEntity> factoryEntities;
 		
 		public FactoryLayer()
 		{
-			components = new List<IFactoryComponent>();
+			factoryEntities = new List<FactoryEntity>();
 		}
 		
 		public void Update() {
 			new Debug("---UPDATING FACTORY---");
-			foreach (var component in components) {
-				component.Update();
+			foreach (var entity in factoryEntities) {
+				entity.Update();
 			}
 			new Debug("---CLOSING FACTORY---");
 		}
 		
-		public void AddFactoryComponent(IFactoryComponent component) {
-			components.Add(component);
+		public void AddFactoryEntity(FactoryEntity entity) {
+			factoryEntities.Add(entity);
 		}
 		
-		public ReadOnlyCollection<IFactoryComponent> Components {
+		public ReadOnlyCollection<FactoryEntity> FactoryEntities {
 			get {
-				return components.AsReadOnly();
+				return factoryEntities.AsReadOnly();
 			}
 		}
 	}

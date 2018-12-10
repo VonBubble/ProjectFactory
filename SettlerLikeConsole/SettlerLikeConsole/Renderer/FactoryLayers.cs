@@ -30,12 +30,13 @@ namespace SettlerLikeConsole.Renderer
 		
 		public static char RenderCell(int x, int y) {
 			char cell = EMPTY_CELL;
-			var component = World.Instance.Terrain.Cells[x,y].FactoryComponent;
-			if(component != null && mapper.ContainsKey(component.Name)) {
-				if(component.GetType() == typeof(Conveyor) && (component as Conveyor).Ressource != null)
-					cell = mapper[(component as Conveyor).Ressource.Name];
-				else
-					cell = mapper[component.Name];
+			var entity = World.Instance.Terrain.Cells[x,y].FactoryEntity;
+			
+			if(entity != null && mapper.ContainsKey(entity.Name)) {
+//				if(component.GetType() == typeof(Conveyor) && (component as Conveyor).Ressource != null)
+//					cell = mapper[(component as Conveyor).Ressource.Name];
+//				else
+					cell = mapper[entity.Name];
 			}
 			
 			return cell;

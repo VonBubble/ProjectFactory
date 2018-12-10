@@ -17,6 +17,7 @@ namespace GameEngine.Utils
 	[Serializable]
 	public enum Orientation
 	{
+		CENTER,
 		NORTH,
 		NORTH_EAST,
 		EAST,
@@ -24,8 +25,7 @@ namespace GameEngine.Utils
 		SOUTH,
 		SOUTH_WEST,
 		WEST,
-		NORTH_WEST,
-		CENTER
+		NORTH_WEST
 	}
 	
 	public static class OrientationMethods
@@ -107,11 +107,15 @@ namespace GameEngine.Utils
 	        }
 	    }
 	    
-	    public static Orientation Rotate(this Orientation orientation) {
-	    	if(orientation == Orientation.CENTER || orientation == Orientation.NORTH_WEST)
-    			return Orientation.NORTH;
-    		else
-    			return (orientation + 1);
+	    public static Orientation Rotate(this Orientation orientation, bool includeCenter) {
+	    	if(includeCenter) {
+		    	if(orientation == Orientation.NORTH_WEST)
+	    			return Orientation.CENTER;
+	    	} else {
+	    		if(orientation == Orientation.NORTH_WEST)
+	    			return Orientation.NORTH;
+	    	}
+	    	return (orientation + 1);
 	    }
 	}
 }

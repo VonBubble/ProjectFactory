@@ -37,7 +37,7 @@ namespace GameEngine.Factory.Entities.Construction
 			var possibles = new List<Vector2Int>();
 			foreach (Orientation orientation in Enum.GetValues(typeof(Orientation))) {
 				var cell = orientation.GetNeighboor(position);
-				if(cell != null && cell.FactoryComponent == null) {
+				if(cell != null && cell.FactoryEntity == null) {
 					possibles.Add(cell.Position);
 				}
 			}

@@ -81,8 +81,8 @@ namespace SettlerLikeConsole.Renderer
 						if(cell != null && i == 0) {
 							line.Append(DisplayBasicDetails(cell, Grid.marginWidth));
 							break;
-						} else if(cell != null && cell.FactoryComponent != null) {
-							line.Append(DisplayFactoryComponentDetails(cell.FactoryComponent, i, Grid.marginWidth));
+						} else if(cell != null && cell.FactoryEntity != null) {
+							line.Append(DisplayFactoryEntityDetails(cell.FactoryEntity, i, Grid.marginWidth));
 							break;
 						} else {
 							if(units.Count > 0) {
@@ -107,12 +107,12 @@ namespace SettlerLikeConsole.Renderer
 			return PadRight(line.ToString(), EMPTY_CELL, width, BORDER_VERTICAL);
 		}
 		
-		private static StringBuilder DisplayFactoryComponentDetails(IFactoryComponent component, int i, int width) {
+		private static StringBuilder DisplayFactoryEntityDetails(FactoryEntity factoryEntity, int i, int width) {
 			var line = new StringBuilder();
-			if(component == null)
+			if(factoryEntity == null)
 				return line;
 			
-			var details = FactoryComponentDetails.GetDetails(component);
+			var details = FactoryEntityDetails.GetDetails(factoryEntity);
 			if(details.Count > i)
 				line.Append(details[i]);
 			
@@ -133,7 +133,9 @@ namespace SettlerLikeConsole.Renderer
 		
 		private static StringBuilder PadRight(string str, char c, int width, char lastChar) {
 			var line = new StringBuilder(str);
-			line.Append(c, width - line.Length - 2);
+			int lenght = width - line.Length - 2;
+			if(lenght > 0)
+				line.Append(c, width - line.Length - 2);
 			line.Append(lastChar);
 			return line;
 		}

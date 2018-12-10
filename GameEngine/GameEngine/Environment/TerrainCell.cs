@@ -20,13 +20,13 @@ namespace GameEngine.Environment
 	{
 		private Vector2Int position;
 		private int elevation;
-		private IFactoryComponent factoryComponent;
+		private FactoryEntity factoryEntity;
 		
 		public TerrainCell(Vector2Int position, int elevation)
 		{
 			this.position = position;
 			this.elevation = elevation;
-			factoryComponent = null;
+			factoryEntity = null;
 		}
 		
 		public Vector2Int Position {
@@ -41,12 +41,12 @@ namespace GameEngine.Environment
 			}
 		}
 		
-		public IFactoryComponent FactoryComponent {
+		public FactoryEntity FactoryEntity {
 			get {
-				return factoryComponent;
+				return factoryEntity;
 			}
 			set {
-				factoryComponent = value;
+				factoryEntity = value;
 			}
 		}
 	}

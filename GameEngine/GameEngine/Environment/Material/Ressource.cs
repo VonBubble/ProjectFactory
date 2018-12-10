@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using GameEngine.Factory.Component;
 
 namespace GameEngine.Environment.Material
 {
@@ -14,15 +15,25 @@ namespace GameEngine.Environment.Material
 	/// Description of Ressource.
 	/// </summary>
 	[Serializable]
-	public class Ressource
+	public class Ressource: IIdentity
 	{
 		private string name;
 		private int quantity;
+		
+		public Ressource() {
+			
+		}
 		
 		public Ressource(string name)
 		{
 			this.name = name;
 			quantity = 0;
+		}
+		
+		public Ressource(string name, int quantity)
+		{
+			this.name = name;
+			this.quantity = quantity;
 		}
 		
 		public bool MergeStack(Ressource ressource) {

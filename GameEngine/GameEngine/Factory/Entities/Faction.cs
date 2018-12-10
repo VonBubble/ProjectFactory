@@ -46,10 +46,10 @@ namespace GameEngine.Factory.Entities
 			}
 		}
 		
-		public void AddFactoryComponent(IFactoryComponent component) {
-			component.Owner = this;
-			factoryLayer.AddFactoryComponent(component);
-			World.Instance.Terrain.Cells[component.Position.X, component.Position.Y].FactoryComponent = component;
+		public void AddFactoryEntity(FactoryEntity factoryEntity) {
+			factoryEntity.Owner = this;
+			factoryLayer.AddFactoryEntity(factoryEntity);
+			World.Instance.Terrain.Cells[factoryEntity.Position.X, factoryEntity.Position.Y].FactoryEntity = factoryEntity;
 		}
 		
 		public void AddUnit(Mecha mecha) {
