@@ -15,27 +15,15 @@ public class Debug
     public void LogWrite(string logMessage)
     {
         m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        try
+        using (StreamWriter w = File.AppendText(m_exePath + "\\" + "log.txt"))
         {
-            using (StreamWriter w = File.AppendText(m_exePath + "\\" + "log.txt"))
-            {
-                Log(logMessage, w);
-            }
-        }
-        catch (Exception ex)
-        {
+            Log(logMessage, w);
         }
     }
 
     public void Log(string logMessage, TextWriter txtWriter)
     {
-        try
-        {
-            txtWriter.WriteLine("{0} {1}: {2}", DateTime.Now.ToShortDateString(), 
-                DateTime.Now.ToLongTimeString(), logMessage);
-        }
-        catch (Exception ex)
-        {
-        }
+        txtWriter.WriteLine("{0} {1}: {2}", DateTime.Now.ToShortDateString(), 
+        	DateTime.Now.ToLongTimeString(), logMessage);
     }
 }

@@ -21,7 +21,6 @@ namespace GameEngine.Factory
 	{
 		Vector2Int Position { get; set;}
 		Faction Owner { get; set; }
-		int DelayUntilNextTick { get; }
 		ReadOnlyCollection<IFactoryComponent> Components { get; }
 		
 		void Update();

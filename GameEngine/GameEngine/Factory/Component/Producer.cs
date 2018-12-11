@@ -26,6 +26,7 @@ namespace GameEngine.Factory.Component
 		{
 			this.Parent = parent;
 			this.timeToProduce = timeToProduce;
+			productionNumber = 2000;
 		}
 		
 		public void Update() {
@@ -40,7 +41,7 @@ namespace GameEngine.Factory.Component
 				container.Ressource.Quantity = 0;
 				timeSinceLastProduction = 0;
 				Mecha mecha = new Mecha(
-					"MK2000" + productionNumber, parent.Position, parent.Owner);
+					"MK" + productionNumber, parent.Position, parent.Owner);
 				parent.Owner.AddUnit(mecha);
 				productionNumber++;
 			}

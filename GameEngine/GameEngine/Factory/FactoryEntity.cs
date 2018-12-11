@@ -24,7 +24,6 @@ namespace GameEngine.Factory
 		private Vector2Int position;
 		private string name;
 		private Faction owner;
-		private int delayUntilNextTick;
 		private List<IFactoryComponent> components;
 		
 		public FactoryEntity(string name, Vector2Int pos, Faction owner) {
@@ -77,11 +76,7 @@ namespace GameEngine.Factory
 				owner = value;
 			}
 		}
-		public int DelayUntilNextTick { 
-			get {
-				return delayUntilNextTick; 
-			}
-		}
+		
 		public ReadOnlyCollection<IFactoryComponent> Components { 
 			get {
 				return components.AsReadOnly();
