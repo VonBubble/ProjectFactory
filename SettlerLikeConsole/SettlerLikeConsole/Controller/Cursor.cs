@@ -11,6 +11,7 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Collections.Generic;
 using GameEngine;
+using SettlerLikeConsole.Renderer;
 using GameEngine.Environment;
 using GameEngine.Factory;
 using GameEngine.Factory.Component;
@@ -37,6 +38,7 @@ namespace SettlerLikeConsole.Controller
 		public static readonly ConsoleKey BUILD_HARVESTER = ConsoleKey.J;
 		public static readonly ConsoleKey BUILD_CONVEYOR = ConsoleKey.K;
 		public static readonly ConsoleKey BUILD_BUILDER = ConsoleKey.L;
+		public static readonly ConsoleKey BUILD_GRABBER = ConsoleKey.M;
 		
 		public static readonly ConsoleKey SAVE = ConsoleKey.O;
 		public static readonly ConsoleKey LOAD = ConsoleKey.P;
@@ -86,6 +88,12 @@ namespace SettlerLikeConsole.Controller
 					}
 				}
 	        } else if(input == ROTATE) {
+				var cell = GetFocusedCell();
+				if(cell.FactoryEntity != null && cell.FactoryEntity.GetComponent<PutInto>() != null)
+				{
+					var putInto = cell.FactoryEntity.GetComponent<PutInto>();
+					putInto.Target = putInto.Target.Rotate(false);
+				}
 //				var cell = GetFocusedCell();
 //				if(cell.FactoryEntity != null && cell.FactoryEntity.GetType() == typeof(Conveyor)) {
 //					(cell.FactoryEntity as Conveyor).Orientation = (cell.FactoryEntity as Conveyor).Orientation.Rotate();
@@ -93,16 +101,22 @@ namespace SettlerLikeConsole.Controller
 			} else if(input == BUILD_HARVESTER) {
 				var faction = World.Instance.FactionList.GetFaction("Player");
 				var harvester = new FactoryEntity("Harvester", position, faction);
-				harvester.AddComponent(new Generator(new Ressource("Iron", 1), harvester));
+				harvester.AddComponent(new Generator(2, new Ressource("Iron", 1), harvester));
 				var container = (Container)harvester.AddComponent(new Container(harvester));
 				container.Ressource = new Ressource("Iron", 0);
+				harvester.AddComponent(new PutInto("Iron", 1, 1, harvester));
 				faction.AddFactoryEntity(harvester);
+			}else if(input == BUILD_GRABBER) {
+				var faction = World.Instance.FactionList.GetFaction("Player");
+				var grabber = new FactoryEntity("Grabber", position, faction);
+				grabber.AddComponent(new Grabber("Iron", 1, 1, grabber));
+				faction.AddFactoryEntity(grabber);
 			}
 			else if(input == BUILD_CONVEYOR) {
 				var faction = World.Instance.FactionList.GetFaction("Player");
 				var conveyor = new FactoryEntity("Conveyor", position, faction);
 				conveyor.AddComponent(new Container(conveyor));
-				var grabber = conveyor.AddComponent(new Grabber("Iron", 1, 2, conveyor));
+				var putInto = conveyor.AddComponent(new PutInto("Iron", 1, 2, conveyor));
 				
 				faction.AddFactoryEntity(conveyor);
 //				var neighboors = new Dictionary<Type, List<IFactoryComponent>>();
@@ -147,10 +161,12 @@ namespace SettlerLikeConsole.Controller
 				var faction = World.Instance.FactionList.GetFaction("Player");
 				var builder = new FactoryEntity("Builder", position, faction);
 				builder.AddComponent(new Container(builder));
+				builder.AddComponent(new Producer(1, builder));
 				faction.AddFactoryEntity(builder);
 			}
 			else if(input == ConsoleKey.Spacebar) {
 				World.Instance.FactionList.Update();
+				//FactoryLayers.displayRessources = !FactoryLayers.displayRessources;
 			}
 		}
 		

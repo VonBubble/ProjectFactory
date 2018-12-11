@@ -26,15 +26,18 @@ namespace SettlerLikeConsole.Renderer
 			details.Add("Owner: " + component.Owner.Name);
 			if(component.GetComponent<Generator>() != null) {
 				var generator = component.GetComponent<Generator>();
+				details.Add("--- Generator");
 				details.Add("Harvest: " + generator.Ressource.Name);
 				if(component.GetComponent<Container>() != null) {
 					var container = component.GetComponent<Container>();
+					details.Add("--- Container");
 					if(container.Ressource != null)
 						details.Add("Amount: " + container.Ressource.Quantity);
 				}
 			}
 			else if(component.GetComponent<Container>() != null) {
 				var container = component.GetComponent<Container>();
+				details.Add("--- Container");
 				if(container.Ressource != null) {
 					details.Add("Hold: " + container.Ressource.Name);
 					details.Add("Amount: " + container.Ressource.Quantity);
@@ -43,11 +46,21 @@ namespace SettlerLikeConsole.Renderer
 				}
 			}
 			if(component.GetComponent<Grabber>() != null) {
+				details.Add("--- Grabber");
 				var grabber = component.GetComponent<Grabber>();
 				details.Add("Move: " + grabber.Ressource.Name);
 				details.Add("By: " + grabber.Ressource.Quantity + "/tick");
 				details.Add("IN: " + Enum.GetName(typeof(Orientation), grabber.Input));
 				details.Add("OUT: " + Enum.GetName(typeof(Orientation), grabber.Output));
+			}
+			if(component.GetComponent<PutInto>() != null) {
+				details.Add("--- PutInto");
+				var putInto = component.GetComponent<PutInto>();
+				if(putInto.Ressource != null)
+					details.Add("Move: " + putInto.Ressource.Name);
+				else
+					details.Add("Move: Nothing");
+				details.Add("To: " + putInto.Target);
 			}
 //			if(component.GetType() == typeof(Harvester)) {
 //				details.Add(component.Position.ToString());

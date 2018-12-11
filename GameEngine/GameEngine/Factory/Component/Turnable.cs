@@ -14,6 +14,7 @@ namespace GameEngine.Factory.Component
 	/// <summary>
 	/// Description of ITurnable.
 	/// </summary>
+	[Serializable]
 	public class Turnable: IFactoryComponent
 	{
 		private FactoryEntity parent;

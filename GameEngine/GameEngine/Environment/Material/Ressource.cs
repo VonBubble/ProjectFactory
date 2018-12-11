@@ -21,7 +21,8 @@ namespace GameEngine.Environment.Material
 		private int quantity;
 		
 		public Ressource() {
-			
+			this.name = "";
+			quantity = 0;
 		}
 		
 		public Ressource(string name)

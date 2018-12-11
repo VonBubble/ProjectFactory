@@ -18,6 +18,7 @@ namespace GameEngine.Factory
 	/// <summary>
 	/// Description of FactoryEntity.
 	/// </summary>
+	[Serializable]
 	public class FactoryEntity: IFactoryEntity
 	{
 		private Vector2Int position;

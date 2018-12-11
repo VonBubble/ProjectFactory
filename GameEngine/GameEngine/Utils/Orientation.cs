@@ -112,7 +112,7 @@ namespace GameEngine.Utils
 		    	if(orientation == Orientation.NORTH_WEST)
 	    			return Orientation.CENTER;
 	    	} else {
-	    		if(orientation == Orientation.NORTH_WEST)
+	    		if(orientation == Orientation.NORTH_WEST || orientation == Orientation.CENTER)
 	    			return Orientation.NORTH;
 	    	}
 	    	return (orientation + 1);

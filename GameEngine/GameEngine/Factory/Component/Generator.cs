@@ -16,18 +16,28 @@ namespace GameEngine.Factory.Component
 	/// <summary>
 	/// Description of Provider.
 	/// </summary>
+	[Serializable]
 	public class Generator: IFactoryComponent
 	{
 		private FactoryEntity parent;
+		private int timeToProduce;
 		private Ressource ressource;
 		private Container container;
+		private int timeSinceLastProduction;
 		
-		public Generator(Ressource ressource, FactoryEntity parent) {
+		public Generator(int timeToProduce, Ressource ressource, FactoryEntity parent) {
+			this.timeToProduce = timeToProduce;
 			this.ressource = ressource;
 			this.parent = parent;
+			timeSinceLastProduction = 0;
 		}
 		
 		public void Update() {
+			timeSinceLastProduction++;
+			if(timeSinceLastProduction < timeToProduce)
+				return;
+			
+			timeSinceLastProduction = 0;
 			if(ressource == null)
 				return;
 			

@@ -8,6 +8,7 @@
  */
 using System;
 using GameEngine.Utils;
+using GameEngine.Factory;
 using GameEngine.Environment.Material;
 
 namespace GameEngine.Factory.Component
@@ -15,6 +16,7 @@ namespace GameEngine.Factory.Component
 	/// <summary>
 	/// Description of Grabber.
 	/// </summary>
+	[Serializable]
 	public class Grabber: IFactoryComponent
 	{
 		private FactoryEntity parent;
@@ -61,12 +63,18 @@ namespace GameEngine.Factory.Component
 			}
 		}
 		
+		private void RessourceReceived(object sender, EventArgs e)
+	    {
+			timeSinceLastMove = 0;
+	    }
+		
 		public FactoryEntity Parent {
 			get {
 				return parent;
 			}
 			set {
 				parent = value;
+				parent.GetComponent<Container>().RessourceReceived += RessourceReceived;
 			}
 		}
 		

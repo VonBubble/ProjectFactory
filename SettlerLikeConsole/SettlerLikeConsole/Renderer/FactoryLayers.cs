@@ -25,17 +25,21 @@ namespace SettlerLikeConsole.Renderer
 		    { "Harvester", 'H' },
 		    { "Conveyor", 'c' },
 		    { "Builder", 'B' },
+		    { "Grabber", 'G' },
 		    { "Iron", 'i' }
 		};
+		public static bool displayRessources = true;
 		
 		public static char RenderCell(int x, int y) {
 			char cell = EMPTY_CELL;
 			var entity = World.Instance.Terrain.Cells[x,y].FactoryEntity;
 			
 			if(entity != null && mapper.ContainsKey(entity.Name)) {
-//				if(component.GetType() == typeof(Conveyor) && (component as Conveyor).Ressource != null)
-//					cell = mapper[(component as Conveyor).Ressource.Name];
-//				else
+				var container = entity.GetComponent<Container>();
+				if(container != null && container.Ressource != null && mapper.ContainsKey(container.Ressource.Name) && 
+				   displayRessources && container.Ressource.Quantity > 0) {
+					cell = mapper[container.Ressource.Name];
+				} else
 					cell = mapper[entity.Name];
 			}
 			

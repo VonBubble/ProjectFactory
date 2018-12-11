@@ -14,8 +14,12 @@ namespace GameEngine.Factory.Component
 	/// <summary>
 	/// Description of Container.
 	/// </summary>
+	[Serializable]
 	public class Container: IFactoryComponent
 	{
+		public event EventHandler RessourceReceived;
+		public delegate void RessourceReceivedEventHandler(object sender, RessourceReceivedEventArgs e);
+		
 		private FactoryEntity parent;
 		private Ressource ressource;
 		
@@ -38,7 +42,20 @@ namespace GameEngine.Factory.Component
 			else {
 				this.ressource = new Ressource(ressource.Name, ressource.Quantity);
 			}
+			
+			var eventArgs = new RessourceReceivedEventArgs();
+			eventArgs.Ressource = this.ressource;
+			OnRessourceReceived(eventArgs);
 		}
+
+	    protected virtual void OnRessourceReceived(EventArgs e)
+	    {
+	        EventHandler handler = RessourceReceived;
+	        if (handler != null)
+	        {
+	            handler(this, e);
+	        }
+	    }
 		
 		public FactoryEntity Parent {
 			get {
@@ -56,5 +73,10 @@ namespace GameEngine.Factory.Component
 				ressource = value;
 			}
 		}
+	}
+	
+	public class RessourceReceivedEventArgs : EventArgs
+	{
+	    public Ressource Ressource { get; set; }
 	}
 }
