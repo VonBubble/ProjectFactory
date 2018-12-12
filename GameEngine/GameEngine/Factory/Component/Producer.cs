@@ -7,6 +7,9 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using GameEngine.Factory.Entities.Construction;
 
 namespace GameEngine.Factory.Component
@@ -22,9 +25,11 @@ namespace GameEngine.Factory.Component
 		private int productionNumber;
 		private Container container;
 		
+		private Producer() {}
+		
 		public Producer(int timeToProduce, FactoryEntity parent)
 		{
-			this.Parent = parent;
+			this.parent = parent;
 			this.timeToProduce = timeToProduce;
 			productionNumber = 2000;
 		}
@@ -46,6 +51,29 @@ namespace GameEngine.Factory.Component
 				productionNumber++;
 			}
 		}
+		
+		#region IXmlSerializer Methods
+	    public void WriteXml (XmlWriter writer)
+	    {
+	    	writer.WriteAttributeString("Type", "Producer");
+	    	writer.WriteAttributeString("Speed", timeToProduce.ToString());
+	    	writer.WriteAttributeString("LastProd", timeSinceLastProduction.ToString());
+	    	writer.WriteAttributeString("ProdNb", productionNumber.ToString());
+	    }
+	
+	    public void ReadXml (XmlReader reader)
+	    {
+	    	timeToProduce = Convert.ToInt32(reader["Speed"]);
+	    	timeSinceLastProduction = Convert.ToInt32(reader["LastProd"]);
+	    	productionNumber = Convert.ToInt32(reader["ProdNb"]);
+	    	reader.Read();
+	    }
+	
+	    public XmlSchema GetSchema()
+	    {
+	        return(null);
+	    }
+	    #endregion
 		
 		public FactoryEntity Parent {
 			get {

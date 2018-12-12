@@ -7,6 +7,9 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using GameEngine.Utils;
 using GameEngine.Environment;
 using GameEngine.Environment.Material;
@@ -24,6 +27,8 @@ namespace GameEngine.Factory.Component
 		private Ressource ressource;
 		private Container container;
 		private int timeSinceLastProduction;
+		
+		private Generator() { }
 		
 		public Generator(int timeToProduce, Ressource ressource, FactoryEntity parent) {
 			this.timeToProduce = timeToProduce;
@@ -46,6 +51,38 @@ namespace GameEngine.Factory.Component
 			
 			container.Receive(ressource);
 		}
+		
+		#region IXmlSerializer Methods
+	    public void WriteXml (XmlWriter writer)
+	    {
+	    	writer.WriteAttributeString("Type", "Generator");
+	    	writer.WriteAttributeString("Speed", timeToProduce.ToString());
+	    	writer.WriteAttributeString("LastProd", timeSinceLastProduction.ToString());
+    		writer.WriteStartElement("GeneratedRessource");
+            ressource.WriteXml(writer);
+            writer.WriteEndElement();
+	    }
+	
+	    public void ReadXml (XmlReader reader)
+	    {
+	    	timeToProduce = Convert.ToInt32(reader["Speed"]);
+	    	timeSinceLastProduction = Convert.ToInt32(reader["LastProd"]);
+	    	ressource = new Ressource();
+	    	if (reader.ReadToDescendant("GeneratedRessource"))
+            {
+                while (reader.MoveToContent() == XmlNodeType.Element && reader.LocalName == "GeneratedRessource")
+                {
+	    		ressource.ReadXml(reader);
+                }
+	    	}
+	    	reader.Read();
+	    }
+	
+	    public XmlSchema GetSchema()
+	    {
+	        return(null);
+	    }
+	    #endregion
 		
 		public FactoryEntity Parent {
 			get {

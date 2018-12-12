@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Xml.Serialization;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using GameEngine.Factory.Entities.Construction;
@@ -74,9 +75,20 @@ namespace GameEngine.Factory.Entities
 			}
 		}
 		
+		[XmlIgnore]
 		public ReadOnlyCollection<Mecha> Units {
 			get {
 				return units.AsReadOnly();
+			}
+		}
+		
+		[XmlElement("Units")]
+		private List<Mecha> ListOfUnits {
+			get {
+				return units;
+			}
+			set {
+				units = value;
 			}
 		}
 	}

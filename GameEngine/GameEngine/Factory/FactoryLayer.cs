@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Xml.Serialization;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -37,9 +38,20 @@ namespace GameEngine.Factory
 			factoryEntities.Add(entity);
 		}
 		
+		[XmlIgnore]
 		public ReadOnlyCollection<FactoryEntity> FactoryEntities {
 			get {
 				return factoryEntities.AsReadOnly();
+			}
+		}
+		
+		[XmlElement("FactoryEntities")]
+		private List<FactoryEntity> ListOfFactoryEntities {
+			get {
+				return factoryEntities;
+			}
+			set {
+				factoryEntities = value;
 			}
 		}
 	}

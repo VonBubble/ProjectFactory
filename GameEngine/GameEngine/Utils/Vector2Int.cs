@@ -29,5 +29,11 @@ namespace GameEngine.Utils
 		{
 			return string.Format("[X={0}, Y={1}]", X, Y);
 		}
+		
+		public static Vector2Int Zero {
+			get {
+				return new Vector2Int(0, 0);
+			}
+		}
 	}
 }

@@ -7,6 +7,9 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using GameEngine.Utils;
 
 namespace GameEngine.Environment
@@ -15,7 +18,7 @@ namespace GameEngine.Environment
 	/// Description of Terrain.
 	/// </summary>
 	[Serializable]
-	public class Terrain
+	public class Terrain: IXmlSerializable
 	{		
 		private TerrainCell[,] cells;
 		
@@ -36,6 +39,40 @@ namespace GameEngine.Environment
 				return null;
 			}
 		}
+	    
+	    #region IXmlSerializer Methods
+	    public void WriteXml (XmlWriter writer)
+	    {
+	    	writer.WriteAttributeString("Width", cells.GetLength(0).ToString());
+	    	writer.WriteAttributeString("Height", cells.GetLength(1).ToString());
+	    	foreach (var cell in cells) {
+	    		writer.WriteStartElement(cell.GetType().Name);
+	            cell.WriteXml(writer);
+	            writer.WriteEndElement();
+	    	}
+	    }
+	
+	    public void ReadXml (XmlReader reader)
+	    {
+	    	int width = Convert.ToInt32(reader["Width"]);
+	    	int height = Convert.ToInt32(reader["Height"]);
+	    	cells = new TerrainCell[width, height];
+	    	if (reader.ReadToDescendant(typeof(TerrainCell).Name))
+            {
+                while (reader.MoveToContent() == XmlNodeType.Element && reader.LocalName == typeof(TerrainCell).Name)
+                {
+                	var cell = new TerrainCell(Vector2Int.Zero, 0);
+                	cell.ReadXml(reader);
+                	cells[cell.Position.X, cell.Position.Y] = cell;
+                }
+            }
+	    }
+	
+	    public XmlSchema GetSchema()
+	    {
+	        return(null);
+	    }
+	    #endregion
 		
 		public TerrainCell[,] Cells {
 			get {

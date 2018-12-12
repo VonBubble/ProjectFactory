@@ -60,9 +60,9 @@ namespace SettlerLikeConsole.Controller
 		
 		public static void Handle(ConsoleKey input) {
 			if(input == SAVE) {
-				Save.SerializeObject<World>(World.Instance, @"C:\Users\lcourtal\Documents\Games\save");
+				Save.SerializeObject<World>(World.Instance, @"C:\Users\lcourtal\Documents\Games\save.xml");
 			} else if(input == LOAD) {
-				World.Instance.LoadSave(Save.DeserializeObject<World>(@"C:\Users\lcourtal\Documents\Games\save"));
+				World.Instance.LoadSave(Save.DeserializeObject<World>(@"C:\Users\lcourtal\Documents\Games\save.xml"));
 			} else if(input == UP)
 				Move(0, -1);
 			else if(input == DOWN)

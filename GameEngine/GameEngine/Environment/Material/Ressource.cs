@@ -7,6 +7,9 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using GameEngine.Factory.Component;
 
 namespace GameEngine.Environment.Material
@@ -15,7 +18,7 @@ namespace GameEngine.Environment.Material
 	/// Description of Ressource.
 	/// </summary>
 	[Serializable]
-	public class Ressource: IIdentity
+	public class Ressource: IIdentity, IXmlSerializable
 	{
 		private string name;
 		private int quantity;
@@ -44,6 +47,26 @@ namespace GameEngine.Environment.Material
 			this.quantity += ressource.quantity;
 			return true;
 		}
+		
+		#region IXmlSerializer Methods
+	    public void WriteXml (XmlWriter writer)
+	    {
+	    	writer.WriteAttributeString("Name", name);
+	    	writer.WriteAttributeString("Quantity", quantity.ToString());
+	    }
+	
+	    public void ReadXml (XmlReader reader)
+	    {
+	    	name = reader["Name"];
+	    	quantity = Convert.ToInt32(reader["Quantity"]);
+	    	reader.Read();
+	    }
+	
+	    public XmlSchema GetSchema()
+	    {
+	        return(null);
+	    }
+	    #endregion
 		
 		public string Name {
 			get {

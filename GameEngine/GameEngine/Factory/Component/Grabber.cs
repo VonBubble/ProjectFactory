@@ -7,6 +7,9 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using GameEngine.Utils;
 using GameEngine.Factory;
 using GameEngine.Environment.Material;
@@ -25,6 +28,8 @@ namespace GameEngine.Factory.Component
 		private Orientation output;
 		private int delayUntilNextMove;
 		private int timeSinceLastMove;
+		
+		private Grabber() { }
 		
 		public Grabber(string name, int amountToGrab, int delayUntilNextMove, FactoryEntity parent)
 		{
@@ -67,6 +72,24 @@ namespace GameEngine.Factory.Component
 	    {
 			timeSinceLastMove = 0;
 	    }
+		
+		#region IXmlSerializer Methods
+	    public void WriteXml (XmlWriter writer)
+	    {
+	    	writer.WriteAttributeString("Input", input.ToString());
+	    	writer.WriteAttributeString("Output", output.ToString());
+	    }
+	
+	    public void ReadXml (XmlReader reader)
+	    {
+	    	reader.Read();
+	    }
+	
+	    public XmlSchema GetSchema()
+	    {
+	        return(null);
+	    }
+	    #endregion
 		
 		public FactoryEntity Parent {
 			get {

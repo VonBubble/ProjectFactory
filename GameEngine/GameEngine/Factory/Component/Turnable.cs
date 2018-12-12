@@ -7,6 +7,9 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using GameEngine.Utils;
 
 namespace GameEngine.Factory.Component
@@ -20,6 +23,8 @@ namespace GameEngine.Factory.Component
 		private FactoryEntity parent;
 		private Orientation orientation;
 		
+		private Turnable() { }
+		
 		public Turnable(FactoryEntity parent) {
 			this.parent = parent;
 		}
@@ -29,6 +34,24 @@ namespace GameEngine.Factory.Component
 		public void Rotate() {
 			orientation.Rotate(false);
 		}
+		
+		#region IXmlSerializer Methods
+	    public void WriteXml (XmlWriter writer)
+	    {
+	    	writer.WriteAttributeString("Type", "Turnable");
+	    	writer.WriteAttributeString("Orientation", orientation.ToString());
+	    }
+	
+	    public void ReadXml (XmlReader reader)
+	    {
+	    	reader.Read();
+	    }
+	
+	    public XmlSchema GetSchema()
+	    {
+	        return(null);
+	    }
+	    #endregion
 		
 		public FactoryEntity Parent {
 			get {

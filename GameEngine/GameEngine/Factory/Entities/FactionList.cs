@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Xml.Serialization;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 
@@ -42,12 +43,25 @@ namespace GameEngine.Factory.Entities
 					return faction;
 			}
 			
-			return null;
+			var newFaction = new Faction(name);
+			factions.Add(newFaction);
+			return newFaction;
 		}
 		
+		[XmlIgnore]
 		public ReadOnlyCollection<Faction> Factions {
 			get {
 				return factions.AsReadOnly();
+			}
+		}
+		
+		[XmlElement("Units")]
+		private List<Faction> ListOfFactions {
+			get {
+				return factions;
+			}
+			set {
+				factions = value;
 			}
 		}
 	}

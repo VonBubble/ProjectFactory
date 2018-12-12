@@ -7,6 +7,9 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using GameEngine.Utils;
 using GameEngine.Factory;
 using GameEngine.Environment.Material;
@@ -26,12 +29,14 @@ namespace GameEngine.Factory.Component
 		private int timeSinceLastMove;
 		private bool alreadyReset = false;
 		
+		private PutInto() {}
+		
 		public PutInto(string name, int amountToMove, int delayUntilNextMove, FactoryEntity parent)
 		{
 			this.Ressource = new Ressource(name);
 			this.ressource.Quantity = amountToMove;
 			this.delayUntilNextMove = delayUntilNextMove;
-			this.Parent = parent;
+			this.parent = parent;
 			this.timeSinceLastMove = 0;
 		}
 		
@@ -63,6 +68,29 @@ namespace GameEngine.Factory.Component
 				alreadyReset = true;
 			}
 	    }
+		
+		#region IXmlSerializer Methods
+	    public void WriteXml (XmlWriter writer)
+	    {
+	    	writer.WriteAttributeString("Type", "PutInto");
+	    	writer.WriteAttributeString("Orientation", target.ToString());
+	    	writer.WriteAttributeString("Delay", delayUntilNextMove.ToString());
+	    	writer.WriteAttributeString("LastMove", timeSinceLastMove.ToString());
+	    }
+	
+	    public void ReadXml (XmlReader reader)
+	    {
+	    	Enum.TryParse(reader["Orientation"], out target);
+	    	delayUntilNextMove = Convert.ToInt32(reader["Delay"]);
+	    	timeSinceLastMove = Convert.ToInt32(reader["LastMove"]);
+	    	reader.Read();
+	    }
+	
+	    public XmlSchema GetSchema()
+	    {
+	        return(null);
+	    }
+	    #endregion
 		
 		public FactoryEntity Parent {
 			get {

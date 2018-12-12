@@ -9,7 +9,9 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml;
 using System.Xml.Serialization;
+using GameEngine.Environment;
 using GameEngine.Factory;
 using GameEngine.Factory.Component;
 
@@ -22,25 +24,49 @@ namespace GameEngine.Utils
 	{
 		public static void SerializeObject<T>(this T toSerialize, String filename)
 		{
-			var formatter = new BinaryFormatter();
-//			var xmlSerializer = new XmlSerializer(toSerialize.GetType(), new Type[] {
-//			                                      	typeof(IFactoryComponent),
-//			                                      	typeof(Harvester),
-//			                                      	typeof(Conveyor),
-//			                                      	typeof(Builder)});
-			
-			using(var fileStream = new FileStream(filename, FileMode.Create)) {
-            	formatter.Serialize(fileStream, toSerialize);
-//				xmlSerializer.Serialize(textWriter, toSerialize);
-			}
+			//var formatter = new BinaryFormatter();
+			var emptyNamespaces = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
+			var xmlSerializer = new XmlSerializer(toSerialize.GetType(), new Type[] {
+			                                      	typeof(Terrain),
+			                                      	typeof(Producer),
+			                                      	typeof(PutInto),
+			                                      	typeof(Container),
+			                                      	typeof(Grabber),
+			                                      	typeof(Turnable),
+			                                      	typeof(Generator)});
+	        var settings = new XmlWriterSettings();
+	        settings.Indent = true;
+	        settings.OmitXmlDeclaration = true;
+	        using (var stream = new StreamWriter(filename))
+	        using (var writer = XmlWriter.Create(stream, settings))
+	        {
+				xmlSerializer.Serialize(writer, toSerialize, emptyNamespaces);
+	        }
 		}
 		
 		public static T DeserializeObject<T>(String filename) {
-			using(var fileStream = new FileStream(filename, FileMode.Open))
+			var emptyNamespaces = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
+			var xmlSerializer = new XmlSerializer(typeof(T), new Type[] {
+			                                      	typeof(Terrain),
+			                                      	typeof(Producer),
+			                                      	typeof(PutInto),
+			                                      	typeof(Container),
+			                                      	typeof(Grabber),
+			                                      	typeof(Turnable),
+			                                      	typeof(Generator)});
+	        var settings = new XmlWriterSettings();
+	        settings.Indent = true;
+	        settings.OmitXmlDeclaration = true;
+	        using (var stream = new StreamReader(filename))
+        	using (var reader = XmlReader.Create(stream))
 	        {
-	            var formatter = new BinaryFormatter();
-	            return (T)formatter.Deserialize(fileStream);
-	        }
+				return(T)xmlSerializer.Deserialize(reader);
+			}
+//			using(var fileStream = new FileStream(filename, FileMode.Open))
+//	        {
+//	            var formatter = new BinaryFormatter();
+//	            return (T)formatter.Deserialize(fileStream);
+//	        }
 		}
 	}
 }
