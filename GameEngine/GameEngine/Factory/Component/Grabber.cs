@@ -76,12 +76,15 @@ namespace GameEngine.Factory.Component
 		#region IXmlSerializer Methods
 	    public void WriteXml (XmlWriter writer)
 	    {
+	    	writer.WriteAttributeString("Type", "Grabber");
 	    	writer.WriteAttributeString("Input", input.ToString());
 	    	writer.WriteAttributeString("Output", output.ToString());
 	    }
 	
 	    public void ReadXml (XmlReader reader)
 	    {
+	    	Enum.TryParse(reader["Input"], out input);
+	    	Enum.TryParse(reader["Output"], out output);
 	    	reader.Read();
 	    }
 	
@@ -97,7 +100,7 @@ namespace GameEngine.Factory.Component
 			}
 			set {
 				parent = value;
-				parent.GetComponent<Container>().RessourceReceived += RessourceReceived;
+				//parent.GetComponent<Container>().RessourceReceived += RessourceReceived;
 			}
 		}
 		

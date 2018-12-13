@@ -82,6 +82,7 @@ namespace GameEngine.Factory
 	    	name = reader["Name"];
 	    	components = new List<IFactoryComponent>();
 	    	owner = World.Instance.FactionList.GetFaction(reader["Owner"]);
+	    	owner.AddFactoryEntity(this);
 	    	//owner = Convert.ToInt32(reader["Z"]);
 	    	reader.MoveToContent();
 	    	if (reader.ReadToDescendant(typeof(IFactoryComponent).Name))
@@ -127,20 +128,9 @@ namespace GameEngine.Factory
 			}
 		}
 		
-		[XmlIgnore]
 		public ReadOnlyCollection<IFactoryComponent> Components { 
 			get {
 				return components.AsReadOnly();
-			}
-		}
-		
-		[XmlElement("Components")]
-		private List<IFactoryComponent> ListOfComponents {
-			get {
-				return components;
-			}
-			set {
-				components = value;
 			}
 		}
 	}

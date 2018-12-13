@@ -52,6 +52,7 @@ namespace GameEngine
 	
 	    public void ReadXml (XmlReader reader)
 	    {
+	    	Instance = this;
 	    	factionList = new FactionList();
 	    	if(reader.ReadToDescendant(typeof(Terrain).Name)) 
 	    	{
@@ -95,6 +96,9 @@ namespace GameEngine
 	        get
 	        {
 	            return factionList;
+	        }
+	        private set {
+	        	factionList = value;
 	        }
 	    }
 	}

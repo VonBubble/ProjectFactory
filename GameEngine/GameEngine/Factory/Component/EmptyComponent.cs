@@ -57,7 +57,7 @@ namespace GameEngine.Factory.Component
 	    			ActualComponent.ReadXml(reader);
 	    			break;
 	    		case "Turnable":
-	    			ActualComponent = new Container(null);
+	    			ActualComponent = new Turnable(null);
 	    			ActualComponent.ReadXml(reader);
 	    			break;
 	    		default:

@@ -56,8 +56,8 @@ namespace GameEngine.Factory.Component
 			var containerTarget = cellTarget.FactoryEntity.GetComponent<Container>();
 			
 			if(containerTarget != null) {
-				containerTarget.Receive(ressource);
-				container.Gather(ressource);
+				containerTarget.Receive(container.Ressource);
+				container.Gather(container.Ressource);
 			}
 		}
 		

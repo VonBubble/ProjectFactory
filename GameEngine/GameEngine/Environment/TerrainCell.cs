@@ -60,7 +60,8 @@ namespace GameEngine.Environment
             {
                 while (reader.MoveToContent() == XmlNodeType.Element && reader.LocalName == typeof(FactoryEntity).Name)
                 {
-	    			factoryEntity = new FactoryEntity("", Vector2Int.Zero, null);
+                	factoryEntity = new FactoryEntity("", Vector2Int.Zero, null);
+            		factoryEntity.Position = position;
             		factoryEntity.ReadXml(reader);
                 }
 	    	}
