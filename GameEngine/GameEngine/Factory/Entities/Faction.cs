@@ -54,6 +54,10 @@ namespace GameEngine.Factory.Entities
 				World.Instance.Terrain.Cells[factoryEntity.Position.X, factoryEntity.Position.Y].FactoryEntity = factoryEntity;
 		}
 		
+		public void RemoveFactoryEntity(FactoryEntity factoryEntity) {
+			factoryLayer.RemoveFactoryEntity(factoryEntity);
+		}
+		
 		public void AddUnit(Mecha mecha) {
 			if(units == null)
 				units = new List<Mecha>();

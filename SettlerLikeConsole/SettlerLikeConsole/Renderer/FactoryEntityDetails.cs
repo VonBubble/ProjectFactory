@@ -62,6 +62,11 @@ namespace SettlerLikeConsole.Renderer
 					details.Add("Move: Nothing");
 				details.Add("To: " + putInto.Target);
 			}
+			if(component.GetComponent<Destructible>() != null) {
+				details.Add("--- Destructible");
+				var destructible = component.GetComponent<Destructible>();
+				details.Add("Health: " + destructible.CurrentHealth + "/" + destructible.MaxHealth);
+			}
 //			if(component.GetType() == typeof(Harvester)) {
 //				details.Add(component.Position.ToString());
 //				details.Add(component.Name);

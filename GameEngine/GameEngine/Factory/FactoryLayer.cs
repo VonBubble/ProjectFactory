@@ -28,6 +28,9 @@ namespace GameEngine.Factory
 		
 		public void Update() {
 			new Debug("---UPDATING FACTORY---");
+			for (int i = factoryEntities.Count - 1; i >= 0; i--) {
+				factoryEntities[i].Update();
+			}
 			foreach (var entity in factoryEntities) {
 				entity.Update();
 			}
@@ -38,20 +41,14 @@ namespace GameEngine.Factory
 			factoryEntities.Add(entity);
 		}
 		
-		[XmlIgnore]
+		public void RemoveFactoryEntity(FactoryEntity entity) {
+			factoryEntities.Remove(entity);
+			World.Instance.Terrain.Cells[entity.Position.X, entity.Position.Y].FactoryEntity = null;
+		}
+		
 		public ReadOnlyCollection<FactoryEntity> FactoryEntities {
 			get {
 				return factoryEntities.AsReadOnly();
-			}
-		}
-		
-		[XmlElement("FactoryEntities")]
-		private List<FactoryEntity> ListOfFactoryEntities {
-			get {
-				return factoryEntities;
-			}
-			set {
-				factoryEntities = value;
 			}
 		}
 	}

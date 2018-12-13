@@ -60,6 +60,10 @@ namespace GameEngine.Factory.Component
 	    			ActualComponent = new Turnable(null);
 	    			ActualComponent.ReadXml(reader);
 	    			break;
+	    		case "Destructible":
+	    			ActualComponent = new Destructible(100);
+	    			ActualComponent.ReadXml(reader);
+	    			break;
 	    		default:
 	    			reader.Read();
 	    			break;

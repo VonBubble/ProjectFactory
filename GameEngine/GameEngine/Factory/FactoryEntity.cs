@@ -47,6 +47,7 @@ namespace GameEngine.Factory
 		
 		public IFactoryComponent AddComponent(IFactoryComponent component) {
 			components.Add(component);
+			component.Parent = this;
 			return component;
 		}
 		

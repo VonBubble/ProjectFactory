@@ -49,11 +49,14 @@ namespace GameEngine.Factory.Component
 			if(container == null ||  container.Ressource == null || container.Ressource.Quantity == 0)
 				return;
 			
+			var cellTarget = target.GetNeighboor(parent.Position);
+			if(cellTarget.FactoryEntity == null)
+				return;
+			
+			var containerTarget = cellTarget.FactoryEntity.GetComponent<Container>();
+			
 			timeSinceLastMove = 0;
 			alreadyReset = false;
-			
-			var cellTarget = target.GetNeighboor(parent.Position);
-			var containerTarget = cellTarget.FactoryEntity.GetComponent<Container>();
 			
 			if(containerTarget != null) {
 				containerTarget.Receive(container.Ressource);

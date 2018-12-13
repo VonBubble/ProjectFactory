@@ -40,6 +40,8 @@ namespace SettlerLikeConsole.Controller
 		public static readonly ConsoleKey BUILD_BUILDER = ConsoleKey.L;
 		public static readonly ConsoleKey BUILD_GRABBER = ConsoleKey.M;
 		
+		public static readonly ConsoleKey DESTROY_BUILDING = ConsoleKey.C;
+		
 		public static readonly ConsoleKey SAVE = ConsoleKey.O;
 		public static readonly ConsoleKey LOAD = ConsoleKey.P;
 		
@@ -79,7 +81,7 @@ namespace SettlerLikeConsole.Controller
 						grabber.Input = grabber.Input.Rotate(true);
 					}
 				}
-	        }else if(input == ROTATE_OUTPUT) {
+	        } else if(input == ROTATE_OUTPUT) {
 				var cell = GetFocusedCell();
 				if(cell.FactoryEntity != null) {
 					var grabber = cell.FactoryEntity.GetComponent<Grabber>();
@@ -105,18 +107,20 @@ namespace SettlerLikeConsole.Controller
 				var container = (Container)harvester.AddComponent(new Container(harvester));
 				container.Ressource = new Ressource("Iron", 0);
 				harvester.AddComponent(new PutInto("Iron", 1, 1, harvester));
+				harvester.AddComponent(new Destructible(250));
 				faction.AddFactoryEntity(harvester);
-			}else if(input == BUILD_GRABBER) {
+			} else if(input == BUILD_GRABBER) {
 				var faction = World.Instance.FactionList.GetFaction("Player");
 				var grabber = new FactoryEntity("Grabber", position, faction);
 				grabber.AddComponent(new Grabber("Iron", 1, 1, grabber));
+				grabber.AddComponent(new Destructible(75));
 				faction.AddFactoryEntity(grabber);
-			}
-			else if(input == BUILD_CONVEYOR) {
+			} else if(input == BUILD_CONVEYOR) {
 				var faction = World.Instance.FactionList.GetFaction("Player");
 				var conveyor = new FactoryEntity("Conveyor", position, faction);
 				conveyor.AddComponent(new Container(conveyor));
-				var putInto = conveyor.AddComponent(new PutInto("Iron", 1, 2, conveyor));
+				conveyor.AddComponent(new PutInto("Iron", 1, 2, conveyor));
+				conveyor.AddComponent(new Destructible(125));
 				
 				faction.AddFactoryEntity(conveyor);
 //				var neighboors = new Dictionary<Type, List<IFactoryComponent>>();
@@ -156,15 +160,23 @@ namespace SettlerLikeConsole.Controller
 //						orientation = defaultOrientation;
 //				}
 //				//World.Instance.FactionList.GetFaction("Player").AddFactoryComponent(new Conveyor(position, orientation));
-			}
-			else if(input == BUILD_BUILDER) {
+			} else if(input == BUILD_BUILDER) {
 				var faction = World.Instance.FactionList.GetFaction("Player");
 				var builder = new FactoryEntity("Builder", position, faction);
 				builder.AddComponent(new Container(builder));
 				builder.AddComponent(new Producer(1, builder));
+				builder.AddComponent(new Destructible(250));
 				faction.AddFactoryEntity(builder);
 			}
-			else if(input == ConsoleKey.Spacebar) {
+			else if(input == DESTROY_BUILDING) {
+				var cell = GetFocusedCell();
+				if(cell.FactoryEntity != null) {
+					var destructible = cell.FactoryEntity.GetComponent<Destructible>();
+					if(destructible != null) {
+						destructible.CurrentHealth = 0;
+					}
+				}
+			} else if(input == ConsoleKey.Spacebar) {
 				World.Instance.FactionList.Update();
 				//FactoryLayers.displayRessources = !FactoryLayers.displayRessources;
 			}
