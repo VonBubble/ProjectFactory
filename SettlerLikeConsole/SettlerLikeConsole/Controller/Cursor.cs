@@ -103,10 +103,10 @@ namespace SettlerLikeConsole.Controller
 			} else if(input == BUILD_HARVESTER) {
 				var faction = World.Instance.FactionList.GetFaction("Player");
 				var harvester = new FactoryEntity("Harvester", position, faction);
-				harvester.AddComponent(new Generator(2, new Ressource("Iron", 1), harvester));
+				harvester.AddComponent(new Generator(6, new Ressource("Iron", 1), harvester));
 				var container = (Container)harvester.AddComponent(new Container(harvester));
 				container.Ressource = new Ressource("Iron", 0);
-				harvester.AddComponent(new PutInto("Iron", 1, 1, harvester));
+				harvester.AddComponent(new PutInto("Iron", 1, 6, harvester));
 				harvester.AddComponent(new Destructible(250));
 				faction.AddFactoryEntity(harvester);
 			} else if(input == BUILD_GRABBER) {

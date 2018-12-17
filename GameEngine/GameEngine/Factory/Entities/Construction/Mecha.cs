@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using GameEngine.Utils;
+using GameEngine.Factory.Component.Behaviour.Pathfinding;
 
 namespace GameEngine.Factory.Entities.Construction
 {
@@ -23,6 +24,7 @@ namespace GameEngine.Factory.Entities.Construction
 		private string name;
 		private Vector2Int position;
 		private Faction owner;
+		private Dijkstra ia;
 		
 		public Mecha() { }
 		
@@ -34,22 +36,27 @@ namespace GameEngine.Factory.Entities.Construction
 		}
 		
 		public void Update() {
-			var possibles = new List<Vector2Int>();
-			foreach (Orientation orientation in Enum.GetValues(typeof(Orientation))) {
-				var cell = orientation.GetNeighboor(position);
-				if(cell != null && cell.FactoryEntity == null) {
-					possibles.Add(cell.Position);
-				}
+			int i = ia.Path.IndexOf(position);
+			if(i > 0) {
+				position = ia.Path[i - 1];
 			}
 			
-			if(possibles.Count == 0) {
-				new Debug(name + " stayed in place because it lacked the room to move.");
-				return;
-			}
-			
-			int choice = RAND.Next(possibles.Count);
-			new Debug(name + " moved from " + position + " to " + possibles[choice] + ".");
-			position = possibles[choice];
+//			var possibles = new List<Vector2Int>();
+//			foreach (Orientation orientation in Enum.GetValues(typeof(Orientation))) {
+//				var cell = orientation.GetNeighboor(position);
+//				if(cell != null && cell.FactoryEntity == null) {
+//					possibles.Add(cell.Position);
+//				}
+//			}
+//			
+//			if(possibles.Count == 0) {
+//				new Debug(name + " stayed in place because it lacked the room to move.");
+//				return;
+//			}
+//			
+//			int choice = RAND.Next(possibles.Count);
+//			new Debug(name + " moved from " + position + " to " + possibles[choice] + ".");
+//			position = possibles[choice];
 		}
 		
 		public string Name {
@@ -73,6 +80,15 @@ namespace GameEngine.Factory.Entities.Construction
 		public Faction Owner {
 			get {
 				return owner;
+			}
+		}
+		
+		public Dijkstra IA {
+			get {
+				return ia;
+			}
+			set {
+				ia = value;
 			}
 		}
 	}

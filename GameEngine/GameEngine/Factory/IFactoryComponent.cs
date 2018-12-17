@@ -8,18 +8,15 @@
  */
 using System;
 using System.Xml.Serialization;
-using GameEngine.Utils;
-using GameEngine.Factory.Entities;
+using GameEngine.Factory.Component;
 
 namespace GameEngine.Factory
 {
 	/// <summary>
 	/// Description of FactoryComponent.
 	/// </summary>
-	public interface IFactoryComponent: IXmlSerializable
+	public interface IFactoryComponent: IXmlSerializable, IComponent
 	{
 		FactoryEntity Parent { get; set; }
-		
-		void Update();
 	}
 }

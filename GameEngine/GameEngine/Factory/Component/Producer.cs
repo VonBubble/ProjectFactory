@@ -7,9 +7,12 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Threading;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using GameEngine.Utils;
+using GameEngine.Factory.Component.Behaviour.Pathfinding;
 using GameEngine.Factory.Entities.Construction;
 
 namespace GameEngine.Factory.Component
@@ -24,6 +27,7 @@ namespace GameEngine.Factory.Component
 		private int timeSinceLastProduction;
 		private int productionNumber;
 		private Container container;
+		private Dijkstra IA;
 		
 		private Producer() {}
 		
@@ -32,6 +36,11 @@ namespace GameEngine.Factory.Component
 			this.parent = parent;
 			this.timeToProduce = timeToProduce;
 			productionNumber = 2000;
+			this.IA = new Dijkstra();
+			IA.Origin = parent.Position;
+			IA.Destination = new Vector2Int { X = World.Instance.Terrain.Cells.GetLength(0) - 1,
+				Y = World.Instance.Terrain.Cells.GetLength(1) - 1 };
+			IA.Start();
 		}
 		
 		public void Update() {
@@ -43,10 +52,12 @@ namespace GameEngine.Factory.Component
 				return;
 			
 			if(container.Ressource != null && container.Ressource.Quantity > 0) {
+				IA.Thread.Join();
 				container.Ressource.Quantity = 0;
 				timeSinceLastProduction = 0;
 				Mecha mecha = new Mecha(
 					"MK" + productionNumber, parent.Position, parent.Owner);
+				mecha.IA = IA;
 				parent.Owner.AddUnit(mecha);
 				productionNumber++;
 			}

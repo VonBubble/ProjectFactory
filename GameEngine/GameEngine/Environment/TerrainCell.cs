@@ -94,5 +94,11 @@ namespace GameEngine.Environment
 				factoryEntity = value;
 			}
 		}
+	    
+	    public bool IsTraversable {
+	    	get {
+	    		return (factoryEntity == null);
+	    	}
+	    }
 	}
 }
