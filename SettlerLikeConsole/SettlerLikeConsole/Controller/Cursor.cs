@@ -39,6 +39,8 @@ namespace SettlerLikeConsole.Controller
 		public static readonly ConsoleKey BUILD_CONVEYOR = ConsoleKey.K;
 		public static readonly ConsoleKey BUILD_BUILDER = ConsoleKey.L;
 		public static readonly ConsoleKey BUILD_GRABBER = ConsoleKey.M;
+
+        public static readonly ConsoleKey BUILD_BUYING_STATION = ConsoleKey.N;
 		
 		public static readonly ConsoleKey DESTROY_BUILDING = ConsoleKey.C;
 		
@@ -61,60 +63,65 @@ namespace SettlerLikeConsole.Controller
 		}
 		
 		public static void Handle(ConsoleKey input) {
-			if(input == SAVE) {
-				Save.SerializeObject<World>(World.Instance, @"C:\Users\lcourtal\Documents\Games\save.xml");
-			} else if(input == LOAD) {
-				World.Instance.LoadSave(Save.DeserializeObject<World>(@"C:\Users\lcourtal\Documents\Games\save.xml"));
-			} else if(input == UP)
-				Move(0, -1);
-			else if(input == DOWN)
-				Move(0, 1);
-			else if(input == LEFT)
-				Move(-1, 0);
-			else if(input == RIGHT)
-				Move(1, 0);
-			else if(input == ROTATE_INPUT) {
-				var cell = GetFocusedCell();
-				if(cell.FactoryEntity != null) {
-					var grabber = cell.FactoryEntity.GetComponent<Grabber>();
-					if(grabber != null) {
-						grabber.Input = grabber.Input.Rotate(true);
-					}
-				}
-	        } else if(input == ROTATE_OUTPUT) {
-				var cell = GetFocusedCell();
-				if(cell.FactoryEntity != null) {
-					var grabber = cell.FactoryEntity.GetComponent<Grabber>();
-					if(grabber != null) {
-						grabber.Output = grabber.Output.Rotate(true);
-					}
-				}
-	        } else if(input == ROTATE) {
-				var cell = GetFocusedCell();
-				if(cell.FactoryEntity != null && cell.FactoryEntity.GetComponent<PutInto>() != null)
-				{
-					var putInto = cell.FactoryEntity.GetComponent<PutInto>();
-					putInto.Target = putInto.Target.Rotate(false);
-				}
-//				var cell = GetFocusedCell();
-//				if(cell.FactoryEntity != null && cell.FactoryEntity.GetType() == typeof(Conveyor)) {
-//					(cell.FactoryEntity as Conveyor).Orientation = (cell.FactoryEntity as Conveyor).Orientation.Rotate();
-//				}
-			} else if(input == BUILD_HARVESTER) {
-				var faction = World.Instance.FactionList.GetFaction("Player");
-				var harvester = new FactoryEntity("Harvester", position, faction);
-				harvester.AddComponent(new Generator(6, new Ressource("Iron", 1), harvester));
-				var container = (Container)harvester.AddComponent(new Container(harvester));
-				container.Ressource = new Ressource("Iron", 0);
-				harvester.AddComponent(new PutInto("Iron", 1, 6, harvester));
-				harvester.AddComponent(new Destructible(250));
-				faction.AddFactoryEntity(harvester);
-			} else if(input == BUILD_GRABBER) {
-				var faction = World.Instance.FactionList.GetFaction("Player");
-				var grabber = new FactoryEntity("Grabber", position, faction);
-				grabber.AddComponent(new Grabber("Iron", 1, 1, grabber));
-				grabber.AddComponent(new Destructible(75));
-				faction.AddFactoryEntity(grabber);
+            if (input == SAVE) {
+                Save.SerializeObject<World>(World.Instance, @"C:\Users\lcourtal\Documents\Games\save.xml");
+            } else if (input == LOAD) {
+                World.Instance.LoadSave(Save.DeserializeObject<World>(@"C:\Users\lcourtal\Documents\Games\save.xml"));
+            } else if (input == UP)
+                Move(0, -1);
+            else if (input == DOWN)
+                Move(0, 1);
+            else if (input == LEFT)
+                Move(-1, 0);
+            else if (input == RIGHT)
+                Move(1, 0);
+            else if (input == ROTATE_INPUT) {
+                var cell = GetFocusedCell();
+                if (cell.FactoryEntity != null) {
+                    var grabber = cell.FactoryEntity.GetComponent<Grabber>();
+                    if (grabber != null) {
+                        grabber.Input = grabber.Input.Rotate(true);
+                    }
+                }
+            } else if (input == ROTATE_OUTPUT) {
+                var cell = GetFocusedCell();
+                if (cell.FactoryEntity != null) {
+                    var grabber = cell.FactoryEntity.GetComponent<Grabber>();
+                    if (grabber != null) {
+                        grabber.Output = grabber.Output.Rotate(true);
+                    }
+                }
+            } else if (input == ROTATE) {
+                var cell = GetFocusedCell();
+                if (cell.FactoryEntity != null && cell.FactoryEntity.GetComponent<PutInto>() != null)
+                {
+                    var putInto = cell.FactoryEntity.GetComponent<PutInto>();
+                    putInto.Target = putInto.Target.Rotate(false);
+                }
+                //				var cell = GetFocusedCell();
+                //				if(cell.FactoryEntity != null && cell.FactoryEntity.GetType() == typeof(Conveyor)) {
+                //					(cell.FactoryEntity as Conveyor).Orientation = (cell.FactoryEntity as Conveyor).Orientation.Rotate();
+                //				}
+            } else if (input == BUILD_HARVESTER) {
+                var faction = World.Instance.FactionList.GetFaction("Player");
+                var harvester = new FactoryEntity("Harvester", position, faction);
+                harvester.AddComponent(new Generator(6, new Ressource("Iron", 1), harvester));
+                var container = (Container)harvester.AddComponent(new Container(harvester));
+                container.Ressource = new Ressource("Iron", 0);
+                harvester.AddComponent(new PutInto("Iron", 1, 6, harvester));
+                harvester.AddComponent(new Destructible(250));
+                faction.AddFactoryEntity(harvester);
+            } else if (input == BUILD_GRABBER) {
+                var faction = World.Instance.FactionList.GetFaction("Player");
+                var grabber = new FactoryEntity("Grabber", position, faction);
+                grabber.AddComponent(new Grabber("Iron", 1, 1, grabber));
+                grabber.AddComponent(new Destructible(75));
+                faction.AddFactoryEntity(grabber);
+            } else if (input == BUILD_BUYING_STATION) {
+                var faction = World.Instance.FactionList.GetFaction("Player");
+                var buyingStation = new FactoryEntity("Buying Station", position, faction);
+                buyingStation.AddComponent(new BuyingStation(10));
+                faction.AddFactoryEntity(buyingStation);
 			} else if(input == BUILD_CONVEYOR) {
 				var faction = World.Instance.FactionList.GetFaction("Player");
 				var conveyor = new FactoryEntity("Conveyor", position, faction);

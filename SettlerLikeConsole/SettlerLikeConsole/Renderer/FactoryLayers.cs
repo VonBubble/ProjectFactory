@@ -26,7 +26,8 @@ namespace SettlerLikeConsole.Renderer
 		    { "Conveyor", 'c' },
 		    { "Builder", 'B' },
 		    { "Grabber", 'G' },
-		    { "Iron", 'i' }
+		    { "Iron", 'i' },
+            { "Buying Station", '$' }
 		};
 		public static bool displayRessources = true;
 		

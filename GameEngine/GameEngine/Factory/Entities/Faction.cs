@@ -11,6 +11,7 @@ using System.Xml.Serialization;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using GameEngine.Factory.Entities.Construction;
+using GameEngine.Economy;
 
 namespace GameEngine.Factory.Entities
 {
@@ -20,9 +21,13 @@ namespace GameEngine.Factory.Entities
 	[Serializable]
 	public class Faction
 	{
+        public delegate void EntityBuiltHandler(object sender, PositionEventArgs args);
+        public event EntityBuiltHandler EntityBuilt;
+
 		private string name;
 		private FactoryLayer factoryLayer;
 		private List<Mecha> units;
+        private Wallet wallet;
 		
 		public Faction() {
 			units = new List<Mecha>();
@@ -33,10 +38,19 @@ namespace GameEngine.Factory.Entities
 			this.name = name;
 			factoryLayer = new FactoryLayer();
 			units = new List<Mecha>();
+            wallet = new Wallet();
 		}
-		
-		public void Update(){
-			new Debug("Faction[" + name + "].Update() called");
+
+        public Faction(string name, int startingBalance)
+        {
+            this.name = name;
+            factoryLayer = new FactoryLayer();
+            units = new List<Mecha>();
+            wallet = new Wallet(startingBalance);
+        }
+
+        public void Update(){
+			new Debugger("Faction[" + name + "].Update() called");
 			factoryLayer.Update();
 			UpdateUnits();
 		}
@@ -50,8 +64,11 @@ namespace GameEngine.Factory.Entities
 		public void AddFactoryEntity(FactoryEntity factoryEntity) {
 			factoryEntity.Owner = this;
 			factoryLayer.AddFactoryEntity(factoryEntity);
-			if(World.Instance.Terrain.Cells[factoryEntity.Position.X, factoryEntity.Position.Y] != null)
-				World.Instance.Terrain.Cells[factoryEntity.Position.X, factoryEntity.Position.Y].FactoryEntity = factoryEntity;
+            if (World.Instance.Terrain.Cells[factoryEntity.Position.X, factoryEntity.Position.Y] != null)
+            {
+                World.Instance.Terrain.Cells[factoryEntity.Position.X, factoryEntity.Position.Y].FactoryEntity = factoryEntity;
+                RaiseEntityBuilt(factoryEntity.Position.X, factoryEntity.Position.Y, factoryEntity);
+            }
 		}
 		
 		public void RemoveFactoryEntity(FactoryEntity factoryEntity) {
@@ -64,7 +81,17 @@ namespace GameEngine.Factory.Entities
 			
 			units.Add(mecha);
 		}
+
+        public void RemoveUnit(Mecha mecha)
+        {
+            units.Remove(mecha);
+        }
 		
+        protected virtual void RaiseEntityBuilt(int x, int y, FactoryEntity factoryEntity)
+        {
+            EntityBuilt?.Invoke(factoryEntity, new PositionEventArgs(x, y));
+        }
+
 		public string Name {
 			get {
 				return name;
@@ -80,21 +107,12 @@ namespace GameEngine.Factory.Entities
 			}
 		}
 		
-		[XmlIgnore]
 		public ReadOnlyCollection<Mecha> Units {
 			get {
 				return units.AsReadOnly();
 			}
 		}
-		
-		[XmlElement("Units")]
-		private List<Mecha> ListOfUnits {
-			get {
-				return units;
-			}
-			set {
-				units = value;
-			}
-		}
-	}
+
+        public Wallet Wallet { get => wallet; set => wallet = value; }
+    }
 }

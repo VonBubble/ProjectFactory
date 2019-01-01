@@ -20,9 +20,11 @@ namespace GameEngine.Factory.Component
 	/// Description of Provider.
 	/// </summary>
 	[Serializable]
-	public class Generator: IFactoryComponent
-	{
-		private FactoryEntity parent;
+	public class Generator: IFactoryComponent, IProgressableComponent
+    {
+        public event EventHandler OnProgressMade;
+
+        private FactoryEntity parent;
 		private int timeToProduce;
 		private Ressource ressource;
 		private Container container;
@@ -51,6 +53,11 @@ namespace GameEngine.Factory.Component
 			
 			container.Receive(ressource);
 		}
+
+        protected virtual void OnGenerationProgress()
+        {
+            OnProgressMade?.Invoke(this, new EventArgs());
+        }
 		
 		#region IXmlSerializer Methods
 	    public void WriteXml (XmlWriter writer)
@@ -105,6 +112,16 @@ namespace GameEngine.Factory.Component
 				container = value;
 			}
 		}
-		
-	}
+
+        public int TimeSinceLastProduction { get => timeSinceLastProduction; set => timeSinceLastProduction = value; }
+        public int TimeToProduce { get => timeToProduce; set => timeToProduce = value; }
+
+        public int ProgressPercent
+        {
+            get
+            {
+                return (int)((timeToProduce - timeSinceLastProduction) / ((timeToProduce + timeSinceLastProduction) / 2f) * 100);
+            }
+        }
+    }
 }

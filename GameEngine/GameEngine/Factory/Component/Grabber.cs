@@ -83,8 +83,8 @@ namespace GameEngine.Factory.Component
 	
 	    public void ReadXml (XmlReader reader)
 	    {
-	    	Enum.TryParse(reader["Input"], out input);
-	    	Enum.TryParse(reader["Output"], out output);
+            input = (Orientation)Enum.Parse(typeof(Orientation), reader["Input"], true);
+            output = (Orientation)Enum.Parse(typeof(Orientation), reader["Output"], true);
 	    	reader.Read();
 	    }
 	

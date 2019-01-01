@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using GameEngine.Utils;
 using GameEngine.Factory.Component.Behaviour.Pathfinding;
+using GameEngine.Factory.Component;
 
 namespace GameEngine.Factory.Entities.Construction
 {
@@ -17,14 +18,15 @@ namespace GameEngine.Factory.Entities.Construction
 	/// Description of Mecha.
 	/// </summary>
 	[Serializable]
-	public class Mecha
+	public class Mecha: IMonetaryValue
 	{
 		private static Random RAND = new Random();
 		
 		private string name;
+        private int value;
 		private Vector2Int position;
 		private Faction owner;
-		private Dijkstra ia;
+		private AStar ia;
 		
 		public Mecha() { }
 		
@@ -83,7 +85,7 @@ namespace GameEngine.Factory.Entities.Construction
 			}
 		}
 		
-		public Dijkstra IA {
+		public AStar IA {
 			get {
 				return ia;
 			}
@@ -91,5 +93,7 @@ namespace GameEngine.Factory.Entities.Construction
 				ia = value;
 			}
 		}
-	}
+
+        public int Value { get => value; set => this.value = value; }
+    }
 }

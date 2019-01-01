@@ -49,7 +49,13 @@ namespace SettlerLikeConsole.Renderer
 					else if(x == -1 || x == width)
 						line.Append(BORDER_VERTICAL);
 					else {
-						line.Append(EMPTY_CELL);
+                        if(y == height - 2)
+                        {
+                            line.Append(DisplayBalancePlayer(width + 2));
+                            break;
+                        }
+                        else
+						    line.Append(EMPTY_CELL);
 					}
 				}
 				Console.WriteLine(line);
@@ -98,6 +104,14 @@ namespace SettlerLikeConsole.Renderer
 			return line;
 		}
 		
+        private static StringBuilder DisplayBalancePlayer(int width)
+        {
+            var line = new StringBuilder("Balance: ");
+            line.Append(String.Format("{0:0,0}", World.Instance.FactionList.GetFaction("Player").Wallet.Balance));
+            line.Append(" credits");
+            return PadRight(line.ToString(), EMPTY_CELL, width, BORDER_VERTICAL);
+        }
+
 		private static StringBuilder DisplayBasicDetails(TerrainCell cell, int width) {
 			var line = new StringBuilder();
 			if(cell == null)

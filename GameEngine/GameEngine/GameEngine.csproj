@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>GameEngine</RootNamespace>
     <AssemblyName>GameEngine</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -31,6 +31,9 @@
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -43,14 +46,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Economy\Wallet.cs" />
     <Compile Include="Environment\Material\Ressource.cs" />
     <Compile Include="Environment\Terrain.cs" />
     <Compile Include="Environment\TerrainCell.cs" />
+    <Compile Include="Factory\Component\BuyingStation.cs" />
     <Compile Include="Factory\Component\Behaviour\IBehaviourComponent.cs" />
     <Compile Include="Factory\Component\Behaviour\Pathfinding\AStar.cs" />
     <Compile Include="Factory\Component\Behaviour\Pathfinding\Dijkstra.cs" />
     <Compile Include="Factory\Component\Behaviour\Pathfinding\IPathfinding.cs" />
     <Compile Include="Factory\Component\Behaviour\Pathfinding\Node.cs" />
+    <Compile Include="Factory\Component\IMonetaryValue.cs" />
+    <Compile Include="Factory\Component\IProgressableComponent.cs" />
     <Compile Include="Factory\Component\Destructible.cs" />
     <Compile Include="Factory\Component\EmptyComponent.cs" />
     <Compile Include="Factory\Component\Grabber.cs" />
@@ -68,7 +75,8 @@
     <Compile Include="Factory\IFactoryComponent.cs" />
     <Compile Include="Factory\FactoryLayer.cs" />
     <Compile Include="Factory\IFactoryEntity.cs" />
-    <Compile Include="Utils\Debug.cs" />
+    <Compile Include="Factory\PositionEventArgs.cs" />
+    <Compile Include="Utils\Debugger.cs" />
     <Compile Include="Utils\Orientation.cs" />
     <Compile Include="Utils\Save.cs" />
     <Compile Include="World.cs" />
@@ -77,16 +85,7 @@
     <Compile Include="Utils\Vector2Int.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Environment" />
-    <Folder Include="Environment\Material" />
-    <Folder Include="Factory" />
-    <Folder Include="Factory\Component" />
-    <Folder Include="Factory\Component\Behaviour" />
-    <Folder Include="Factory\Component\Behaviour\Pathfinding" />
-    <Folder Include="Factory\Component\Behaviour\Steering" />
-    <Folder Include="Factory\Entities" />
-    <Folder Include="Factory\Entities\Construction" />
-    <Folder Include="Utils" />
+    <Folder Include="Factory\Component\Behaviour\Steering\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -21,7 +21,9 @@ namespace GameEngine.Factory.Component
 	public class Container: IFactoryComponent
 	{
 		public event EventHandler RessourceReceived;
-		public delegate void RessourceReceivedEventHandler(object sender, RessourceReceivedEventArgs e);
+        public event EventHandler OnProgressMade;
+
+        public delegate void RessourceReceivedEventHandler(object sender, RessourceReceivedEventArgs e);
 		
 		private FactoryEntity parent;
 		private Ressource ressource;
@@ -106,7 +108,9 @@ namespace GameEngine.Factory.Component
 				ressource = value;
 			}
 		}
-	}
+
+        public int ProgressPercent => throw new NotImplementedException();
+    }
 	
 	public class RessourceReceivedEventArgs : EventArgs
 	{

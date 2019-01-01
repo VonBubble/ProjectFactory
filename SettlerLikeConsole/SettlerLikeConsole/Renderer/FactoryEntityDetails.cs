@@ -67,6 +67,20 @@ namespace SettlerLikeConsole.Renderer
 				var destructible = component.GetComponent<Destructible>();
 				details.Add("Health: " + destructible.CurrentHealth + "/" + destructible.MaxHealth);
 			}
+            if(component.GetComponent<BuyingStation>() != null)
+            {
+                details.Add("--- Units Pending");
+                var totalValue = 0;
+                foreach (var unit in component.Owner.Units)
+                {
+                    if (unit.Position == component.Position)
+                    {
+                        details.Add(unit.Name + " (" + unit.Value + "$)");
+                        totalValue += unit.Value;
+                    }
+                }
+                details.Add("Value: " + totalValue + "$");
+            }
 //			if(component.GetType() == typeof(Harvester)) {
 //				details.Add(component.Position.ToString());
 //				details.Add(component.Name);

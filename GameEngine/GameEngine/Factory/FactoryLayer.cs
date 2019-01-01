@@ -27,14 +27,14 @@ namespace GameEngine.Factory
 		}
 		
 		public void Update() {
-			new Debug("---UPDATING FACTORY---");
+			new Debugger("---UPDATING FACTORY---");
 			for (int i = factoryEntities.Count - 1; i >= 0; i--) {
 				factoryEntities[i].Update();
 			}
 			foreach (var entity in factoryEntities) {
 				entity.Update();
 			}
-			new Debug("---CLOSING FACTORY---");
+			new Debugger("---CLOSING FACTORY---");
 		}
 		
 		public void AddFactoryEntity(FactoryEntity entity) {

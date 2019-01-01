@@ -30,9 +30,16 @@ namespace GameEngine.Factory
 		private Faction owner;
 		private List<IFactoryComponent> components;
 		
-		private FactoryEntity() {}
-		
-		public FactoryEntity(string name, Vector2Int pos, Faction owner) {
+		private FactoryEntity() { }
+
+        public FactoryEntity(string name, Vector2Int pos)
+        {
+            components = new List<IFactoryComponent>();
+            this.name = name;
+            this.position = pos;
+        }
+
+        public FactoryEntity(string name, Vector2Int pos, Faction owner) {
 			components = new List<IFactoryComponent>();
 			this.name = name;
 			this.position = pos;

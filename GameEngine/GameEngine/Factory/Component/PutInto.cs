@@ -21,8 +21,10 @@ namespace GameEngine.Factory.Component
 	/// </summary>
 	[Serializable]
 	public class PutInto: IFactoryComponent
-	{
-		private FactoryEntity parent;
+    {
+        public event EventHandler<PositionEventArgs> RaiseRotatedEvent;
+
+        private FactoryEntity parent;
 		private Ressource ressource;
 		private Orientation target;
 		private int delayUntilNextMove;
@@ -64,6 +66,12 @@ namespace GameEngine.Factory.Component
 			}
 		}
 		
+        public void Rotate()
+        {
+            target = target.Rotate(false);
+            OnRotation();
+        }
+
 		private void RessourceReceived(object sender, EventArgs e)
 	    {
 			if(alreadyReset == false) {
@@ -71,9 +79,14 @@ namespace GameEngine.Factory.Component
 				alreadyReset = true;
 			}
 	    }
-		
-		#region IXmlSerializer Methods
-	    public void WriteXml (XmlWriter writer)
+        
+        protected virtual void OnRotation()
+        {
+            RaiseRotatedEvent?.Invoke(this, new PositionEventArgs(parent.Position.X, parent.Position.Y));
+        }
+
+        #region IXmlSerializer Methods
+        public void WriteXml (XmlWriter writer)
 	    {
 	    	writer.WriteAttributeString("Type", "PutInto");
 	    	writer.WriteAttributeString("Orientation", target.ToString());
@@ -82,8 +95,8 @@ namespace GameEngine.Factory.Component
 	    }
 	
 	    public void ReadXml (XmlReader reader)
-	    {
-	    	Enum.TryParse(reader["Orientation"], out target);
+        {
+            target = (Orientation)Enum.Parse(typeof(Orientation), reader["Orientation"], true);
 	    	delayUntilNextMove = Convert.ToInt32(reader["Delay"]);
 	    	timeSinceLastMove = Convert.ToInt32(reader["LastMove"]);
 	    	reader.Read();
@@ -101,7 +114,8 @@ namespace GameEngine.Factory.Component
 			}
 			set {
 				parent = value;
-				parent.GetComponent<Container>().RessourceReceived += RessourceReceived;
+                if(parent.GetComponent<Container>() != null)
+				    parent.GetComponent<Container>().RessourceReceived += RessourceReceived;
 			}
 		}
 		

@@ -3,11 +3,11 @@ using System.IO;
 using System.Reflection;
 
 
-public class Debug
+public class Debugger
 {
     private string m_exePath = string.Empty;
     
-    public Debug(string logMessage)
+    public Debugger(string logMessage)
     {
         LogWrite(logMessage);
     }

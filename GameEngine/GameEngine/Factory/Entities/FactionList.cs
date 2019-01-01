@@ -27,14 +27,16 @@ namespace GameEngine.Factory.Entities
 		}
 		
 		public void Update() {
-			new Debug("FactionList.update() called");
+			new Debugger("FactionList.update() called");
 			foreach (var faction in factions) {
 				faction.Update();
 			}
 		}
 		
-		public void AddFaction(string name) {
-			factions.Add(new Faction(name));
+		public Faction AddFaction(string name) {
+            var faction = new Faction(name);
+            factions.Add(faction);
+            return faction;
 		}
 		
 		public Faction GetFaction(string name) {

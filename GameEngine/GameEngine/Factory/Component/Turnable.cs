@@ -20,6 +20,8 @@ namespace GameEngine.Factory.Component
 	[Serializable]
 	public class Turnable: IFactoryComponent
 	{
+        public event EventHandler<PositionEventArgs> RaiseRotatedEvent;
+
 		private FactoryEntity parent;
 		private Orientation orientation;
 		
@@ -32,9 +34,15 @@ namespace GameEngine.Factory.Component
 		public void Update() { }
 		
 		public void Rotate() {
-			orientation.Rotate(false);
+            orientation.Rotate(false);
+            OnRotation();
 		}
 		
+        protected virtual void OnRotation()
+        {
+            RaiseRotatedEvent?.Invoke(this, new PositionEventArgs(parent.Position.X, parent.Position.Y));
+        }
+
 		#region IXmlSerializer Methods
 	    public void WriteXml (XmlWriter writer)
 	    {

@@ -35,7 +35,8 @@ namespace GameEngine
 	    public void InitializeNewWorld() {
 	    	terrain = new Terrain();
 	    	factionList = new FactionList();
-	    	factionList.AddFaction("Player");
+	    	var player = factionList.AddFaction("Player");
+            player.Wallet.Balance = 150000;
 	    }
 	    
 	    public void LoadSave(World save) {

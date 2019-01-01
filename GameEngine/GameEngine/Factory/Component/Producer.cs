@@ -27,7 +27,7 @@ namespace GameEngine.Factory.Component
 		private int timeSinceLastProduction;
 		private int productionNumber;
 		private Container container;
-		private Dijkstra IA;
+		private AStar IA;
 		
 		private Producer() {}
 		
@@ -36,7 +36,7 @@ namespace GameEngine.Factory.Component
 			this.parent = parent;
 			this.timeToProduce = timeToProduce;
 			productionNumber = 2000;
-			this.IA = new Dijkstra();
+			this.IA = new AStar();
 			IA.Origin = parent.Position;
 			IA.Destination = new Vector2Int { X = World.Instance.Terrain.Cells.GetLength(0) - 1,
 				Y = World.Instance.Terrain.Cells.GetLength(1) - 1 };
@@ -58,6 +58,7 @@ namespace GameEngine.Factory.Component
 				Mecha mecha = new Mecha(
 					"MK" + productionNumber, parent.Position, parent.Owner);
 				mecha.IA = IA;
+                mecha.Value = 150;
 				parent.Owner.AddUnit(mecha);
 				productionNumber++;
 			}

@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{D05E7CD8-CFB8-D90F-E408-EF5F5A628A69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngine", "..\GameEngine\GameEngine\GameEngine.csproj", "{689315C5-8357-456A-BEC3-24D9BCE6104A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettlerLikeConsole", "..\SettlerLikeConsole\SettlerLikeConsole\SettlerLikeConsole.csproj", "{AB6DFD2C-3199-481F-A95B-42BB754E59ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D05E7CD8-CFB8-D90F-E408-EF5F5A628A69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D05E7CD8-CFB8-D90F-E408-EF5F5A628A69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D05E7CD8-CFB8-D90F-E408-EF5F5A628A69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D05E7CD8-CFB8-D90F-E408-EF5F5A628A69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{689315C5-8357-456A-BEC3-24D9BCE6104A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{689315C5-8357-456A-BEC3-24D9BCE6104A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{689315C5-8357-456A-BEC3-24D9BCE6104A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{689315C5-8357-456A-BEC3-24D9BCE6104A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB6DFD2C-3199-481F-A95B-42BB754E59ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB6DFD2C-3199-481F-A95B-42BB754E59ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB6DFD2C-3199-481F-A95B-42BB754E59ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB6DFD2C-3199-481F-A95B-42BB754E59ED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
